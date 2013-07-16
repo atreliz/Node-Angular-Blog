@@ -1,0 +1,81 @@
+
+<section class="page fadein">
+	<!-- Listado de POTS Last id={{lastPostId}}-->
+	<div class="centrado">
+		<div class="txtleft mitad izquierda">
+			<h2>Editor panel</h2>
+			<p>Number of posts per page: {{postList.length}} </p>
+		</div>
+
+		<div class="txtright mitad derecha">
+			<button class="bt-blue" ng-click="newpost(lastPostId)"><i class="icon-plus"></i>NEW POST</button> 
+			<p class="mitad derecha"><b>STATUS:</b><span class="txtred"> {{sms}}</span></p>
+		</div>
+
+		<table class="centrado block white">
+			<tr class="txtcenter">
+				<td>id</td> 
+				<td>category</td> 
+				<td>title</td> 
+				<td>author</td> 
+				<td>dateCreated</td> 
+				<td> Edit </td>
+				<td> Delete </td>
+			</tr>
+			<tr ng-repeat="post in postList" class="txtcenter">
+				<td>{{post.id}}</td>
+				<td>{{post.category}}</td> 
+				<td>{{post.title}}</td>
+				<td>{{post.author}}</td> 
+				<td>{{post.dateCreated | date:'dd/MM/yyyy'}}</td> 
+				<td> <button ng-click="loadpost(post.id)"> <i class="icon-pencil"></i>Edit</button> </td>
+				<td> <button ng-click="deletepost(post.id)"><i class="icon-remove"></i>Delete</button> </td>
+			</tr>
+		</table>
+	</div>
+
+		
+	<form class="centrado block" name="datos" ng-model="data">					
+		<article class="htmlSide mitad izquierda block white">
+			<ul class="block">
+				<li>
+					<label>Id: {{post.id}}</label>   
+				</li>
+				<li>
+					<label>Category:</label>
+					<input ng-model="post.category">
+				</li>
+				<li>
+					<label>Title:</label> 
+					<input ng-model="post.title">
+				</li>
+				<li>
+					<label>Author:</label>
+					<input ng-model="post.author">
+				</li>
+			</ul>
+			<div>
+				<h3 class="txtblue">CSS</h3>
+				<textarea  class="cssCoding block" placeholder="Add your custom css here" ng-model="post.css"> </textarea>
+				<h3 class="txtblue">HTML</h3>
+				<textarea class="htmlCoding block"  placeholder="Html template will be loaded here" ng-model="post.content"> </textarea>
+			</div>		
+		</article>
+	
+				
+				<!-- POST config-->
+		<article class="previewSide mitad derecha block white">
+			<ul class="block">
+				<li>id: {{post.id}}</li>
+				<li>category: {{post.category}}</li>
+				<li>title: {{post.title}}</li>
+				<li>author: {{post.author}}</li>
+				<li>dateCreated: {{post.dateCreated | date:'dd/MM/yyyy'}}</li>
+				<li>dateModified: {{post.dateModified | date:'dd/MM/yyyy'}}</li>
+			</ul>
+
+			<div class="htmlPreview block grey" ng-bind-html-unsafe="post.css+post.content"> </div>
+			<button class="bt-blue"  ng-click="postData(post)"> Save Post </button>
+		</article>
+	</form>
+</section>

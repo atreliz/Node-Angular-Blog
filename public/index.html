@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" ng-app="nodeblog" ng-controller="MainCtrl">
+	<head>
+	  <meta charset="utf-8">
+	  <title>Node Blog</title>
+	  <link rel="stylesheet" href="css/reset.css">
+	  <link rel="stylesheet" href="css/font-awesome.min.css">
+	  <link rel="stylesheet" href="css/style.css">
+
+	  <script src="js/vendor/angular.min.js"></script>
+	  <script src="js/app.js"></script>
+	   <script src="js/controllers.js"></script>
+
+
+	</head>
+
+	<body>
+		<header class="centrado block grey">
+			<div>
+				<h1 class="txtleft"><a href="#/">{{config.title}}</a></h1>
+				<h2 class="txtcenter">{{config.subtitle}}</h2>
+				<p class="txtcenter">{{config.description}}</p>
+			</div>
+		</header>
+
+
+		<section  id="maincontainer" class="centrado block grey" ng-view>
+			<h1>Error here will be your page</h1>
+		</section>
+		
+
+
+		<footer class="centrado block grey">
+			<div class="mitad izquierda ">
+				<p class="txtcenter">Made by Alex Trebolle </p>
+				<p class="txtcenter">
+					<a href="#"><i class="icon-linkedin-sign "></i></a>
+					<a href="#"><i class="icon-rocket "></i></a>
+					<a href="#"><i class=" icon-info-sign "></i></a>
+					<a href="#"><i class="icon-github-alt "></i></a>
+					<a href="#"><i class="icon-twitter "></i></a>
+					<a href="#"><i class="icon-facebook-sign"></i></a>
+				</p>
+			</div>
+			<div class="mitad derecha">
+				<button class="bt-blue"  ng-click="popup=true"><i class="icon-user"></i> Login</button>
+			</div>
+		</footer>	 
+
+		<section ng-show="popup==true" class="modal">
+			<div class="centrado block white">
+				<form name="loginForm" ng-model="login">
+					<h3 class="txtleft mitad izquierda" >Login screen: </h3>
+					<i class="txtright icon-remove mitad derecha" ng-click="popup=false"></i>
+					<fieldset>
+						<label class="mitad izquierda">Email: <span ng-hide="loginForm.email.$valid" class="error">* required</span></label>
+						<input class="mitad derecha" type="email" name="email" ng-model="login.email" required>
+					</fieldset>
+					<fieldset>
+						<label class="mitad izquierda">Password: <span ng-hide="loginForm.pass.$valid" class="error">* required</span></label>
+						<input class="mitad derecha" type="password" name="pass" ng-model="login.pass" required>
+					</fieldset>
+					<p class="centrado txtred">{{error}}</p>
+					<fieldset>
+						<button class="bt-blue"   ng-disabled="!loginForm.$valid" ng-click="trylogin(login)"> 
+							<i ng-show="loginForm.$valid" class="icon-unlock"></i>
+							<i ng-hide="loginForm.$valid" class="icon-lock"></i>
+							Submit</button>
+					</fieldset>
+					
+				</form>
+			</div>
+		</section>
+		
+	 
+	</body>
+</html>

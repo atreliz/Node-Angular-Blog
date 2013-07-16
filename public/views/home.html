@@ -1,0 +1,36 @@
+
+<section class="centrado white block">
+	<h2>Here are some of my lastest post</h2>
+	<ul class="postlist">
+		<li class="block" ng-repeat="posted in postList" ng-click="loadpost(posted.id)">
+			<span class="title">{{posted.title}}</span>
+			<span class="shortpost" ng-bind-html-unsafe="posted.content"></span>
+			<span class="cat"><i class="icon-folder-close "></i>{{posted.category}}</span>
+			<span class="date"> <i class="icon-calendar "></i> {{posted.dateCreated | date:'dd/MM/yyyy'}}</span>
+		</li>
+	</ul>
+</section>
+
+<section class="centrado white block mainpost">
+	<p class="title txtleft">{{post.title}}</p>
+	<article class="postcontent" ng-bind-html-unsafe="post.content">
+	</article>
+	<article class="postdata">
+		<ul>
+			<li class="cat mitad izquierda"><i class="icon-folder-open "></i>{{post.category}}</li>
+			<li class="date mitad derecha txtright"> <i class="icon-calendar "></i>{{post.dateCreated | date:'dd/MM/yyyy'}}</li>
+		</ul>
+	</article>
+	<nav class="centrado">
+		<!--{{lastPostId}} =? {{post.id}} -->
+		<div class="mitad izquierda" >
+			<button class="bt-blue" ng-show="post.id!=lastPostId" ng-click="getNextPost(post.id)"> <i class="icon-arrow-left"></i> Newer</button>
+		</div>
+		<div class="mitad derecha">
+			<button class="bt-blue"   ng-show="post.id!=0"  ng-click="getPrevPost(post.id)"> Older <i class="icon-arrow-right"></i></button>
+		</div>
+	</nav>
+
+</section>
+
+
