@@ -15,6 +15,8 @@
 	</head>
 
 	<body>
+
+		<!--HEADER-->
 		<header class="centrado block grey">
 			<div>
 				<h1 class="txtleft"><a href="#/">{{config.title}}</a></h1>
@@ -23,30 +25,34 @@
 			</div>
 		</header>
 
-
+		<!--MAIN-->
 		<section  id="maincontainer" class="centrado block grey" ng-view>
 			<h1>Error here will be your page</h1>
 		</section>
 		
 
-
+		<!--FOOTER-->
 		<footer class="centrado block grey">
 			<div class="mitad izquierda ">
 				<p class="txtcenter">Made by Alex Trebolle </p>
 				<p class="txtcenter">
-					<a href="#"><i class="icon-linkedin-sign "></i></a>
-					<a href="#"><i class="icon-rocket "></i></a>
-					<a href="#"><i class=" icon-info-sign "></i></a>
-					<a href="#"><i class="icon-github-alt "></i></a>
-					<a href="#"><i class="icon-twitter "></i></a>
-					<a href="#"><i class="icon-facebook-sign"></i></a>
+					<a target="_blank" href="#"><i class="icon-linkedin-sign "></i></a>
+					<a target="_blank" href="http://newebtaste.com/"><i class="icon-rocket "></i></a>
+					<a target="_blank" href="http://re.vu/Alex-trebolle"><i class=" icon-info-sign "></i></a>
+					<a target="_blank" href="https://github.com/atreliz/Node-Angular-Blog"><i class="icon-github-alt "></i></a>
+					<a target="_blank" href="https://twitter.com/alex_trebolle"><i class="icon-twitter "></i></a>
+					<a target="_blank" href="http://www.linkedin.com/pub/alex-trebolle-liz/1a/989/3b7"><i class="icon-facebook-sign"></i></a>
 				</p>
 			</div>
 			<div class="mitad derecha">
-				<button class="bt-blue"  ng-click="popup=true"><i class="icon-user"></i> Login</button>
+				<button class="bt-blue"  ng-show="logged" ng-click="popup=true"><i class="icon-user"></i> Login </button>
+				<button class="bt-blue"  ng-show="!logged" ng-click="trylogin('')"><i class="icon-gears"></i> Admin Panel </button>
+				<button class="bt-blue"  ng-show="!logged" ng-click="logout()"><i class="icon-off"></i> Logout </button>
 			</div>
 		</footer>	 
 
+
+		<!--MODAL WINDOW-->
 		<section ng-show="popup==true" class="modal">
 			<div class="centrado block white">
 				<form name="loginForm" ng-model="login">

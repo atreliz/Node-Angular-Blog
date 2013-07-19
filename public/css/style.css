@@ -89,21 +89,21 @@ ul.postlist li span{
 }
 
 ul.postlist li span.shortpost{
-	height: 100px;
+	height: 90px;
+	margin-bottom: 0px;
 	overflow: hidden;
-	text-overflow: ellipsis;
-	-o-text-overflow: ellipsis;
-	white-space: nowrap;
+	width:100%;
 }
 ul.postlist li span.shortpost:after{
-	content:"...";
+	content:"read complete";
 	float:left;
 	display: block;
 	width: 100%;
 	margin-bottom: 10px;
 	}
 .title,.cat,.date{font-weight: bold;}
-.title{color:#0044cc;}
+.title{color:#0044cc; font-size: 22px;}
+ul.postlist .title{ font-size: 18px;}
 
 button,.bt{
 	display: inline-block;
@@ -247,6 +247,11 @@ table td{
 .htmlSide input{
 	float:right;
 	width:50%;
+}
+/* ----------- */
+.postcontent p{
+
+	margin-top:10px;
 }
 
 /*---------------------*/

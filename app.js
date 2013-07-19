@@ -69,7 +69,7 @@ app.get('/login', function(req, res){
       if(userListJson[i].email==logMail && userListJson[i].password==logPass){
          res.send("welcome");
          found=true;
-         console.log("User logged "+req.query.password);
+         console.log("User logged "+logMail);
       }
   }
   if(found===false){

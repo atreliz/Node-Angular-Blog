@@ -12,7 +12,7 @@ var defaultPagination=5; //This will load 5 post,default pagination
 // ---MAIN BLOG CONTROLLER
 //
 
-function MainCtrl($scope, $http,$location) {
+function MainCtrl($scope, $http,$location,$rootScope) {
 	console.log("MainCtrl loaded");
 	$scope.config={"title":"Alex Trebolle Blog","subtitle":"This is an Angular+Node experiment","description":"Wellcome to blog I hope you will find something cool"}
 
@@ -36,7 +36,7 @@ function MainCtrl($scope, $http,$location) {
 		      	console.log( "llegado en POST: "+JSON.stringify(data) );
 		      	console.log( data );
 		      	$scope.post=data;
-		      	$scope.contentCss="<style type='text/css'></style>";
+		      	//$scope.contentCss="<style type='text/css'> \r\n .postStyle{} \r\n </style>";
 		      	$scope.sms="Ready to edit";
 		      }).
 		      error(function(data, status) {
@@ -74,35 +74,66 @@ function MainCtrl($scope, $http,$location) {
 
 //try to login
 		$scope.trylogin=function(login){ //not ready
-			var loadpostUrl=serverUrl+"/login?email="+login.email+"&password="+login.pass;
-			$http({method: 'GET', url: loadpostUrl, headers: {'Content-Type':'*/*'}}).
-		      success(function(data) {
-		      	console.log( "loged as: "+JSON.stringify(login) );
-		      	if(data==="welcome"){
-		      		$location.path("/editor");
-		      		$scope.popup=false;
-		      	}else{
-		      		$scope.error="User not found";
-		      	}
-		      	
-		
-		      }).
-		      error(function(data, status) {
-		      	console.log("Error on login: ");
-			  });		
+			if(sessionStorage.getItem('logged_as') ){
+				$scope.popup=false;
+				$location.path("/editor");
+			}else{
+				var loadpostUrl=serverUrl+"/login?email="+login.email+"&password="+login.pass;
+				$http({method: 'GET', url: loadpostUrl, headers: {'Content-Type':'*/*'}}).
+			      success(function(data) {
+			      	console.log( "loged as: "+JSON.stringify(login) );
+			      	if(data==="welcome"){
+			      		sessionStorage.setItem('logged_as',login.email);
+			      		$scope.logged=false;
+
+			      		$location.path("/editor");
+			      		$scope.popup=false;
+			      	}else{
+			      		$scope.error="User not found";
+			      		$scope.logged=false;
+			      		 sessionStorage.removeItem('logged_as');
+			      	}
+			      }).
+			      error(function(data, status) {
+			      	console.log("Error on login: ");
+				  });
+			}
 		};
+
+		$scope.logout=function(){ //not ready
+			sessionStorage.removeItem('logged_as');
+			$location.path("/");
+			$scope.logged=true;
+		};
+
+
 
 
 
 
 }//closing MainCtrl
 
-function homeCtrl($scope,$rootScope, $http) {
+function homeCtrl($scope,$rootScope, $http,$routeParams) {
 	console.log("EditorCtrl loaded");
 
 	$scope.paginatePost(4,'all','postList');//This will load 4 post
-	$scope.getLastPost('post');//This will load 1 post
-	$scope.getLastPostId();
+	//$scope.getLastPost('post');//This will load 1 post
+	$scope.getLastPostId(); //?para qeu lo uso
+console.log("ID PEDIDA:"+$routeParams.postid);
+	if($routeParams.postid){
+		$scope.loadpost($routeParams.postid);
+	}else{
+		  $scope.getLastPost('post')
+	}
+
+	
+
+	//check if user is logged
+	if(!sessionStorage.getItem('logged_as') ){
+		$rootScope.logged=true;
+	}else{
+		$rootScope.logged=false;
+	}
 
 	$scope.getNextPost=function(id){
 		var loadpostUrl=serverUrl+"/getNextPost?id="+id;
@@ -175,7 +206,7 @@ function EditorCtrl($scope, $http) {
 			"dateCreated":""+now+"",
 			"dateModified":""+now+"",
 			"author":"Alex",
-			"css":"<style type='text/css'></style>",
+			"css":"<style type='text/css'> \r\n .postid-"+newid+"{} \r\n </style>",
 			"content":"<p>Write your html here</p>"
 		}
 

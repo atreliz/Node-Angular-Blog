@@ -74,7 +74,7 @@
 				<li>dateModified: {{post.dateModified | date:'dd/MM/yyyy'}}</li>
 			</ul>
 
-			<div class="htmlPreview block grey" ng-bind-html-unsafe="post.css+post.content"> </div>
+			<div class="htmlPreview block grey postStyle" ng-bind-html-unsafe="post.css+post.content"> </div>
 			<button class="bt-blue"  ng-click="postData(post)"> Save Post </button>
 		</article>
 	</form>

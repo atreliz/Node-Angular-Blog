@@ -2,10 +2,12 @@
 <section class="centrado white block">
 	<h2>Here are some of my lastest post</h2>
 	<ul class="postlist">
-		<li class="block" ng-repeat="posted in postList" ng-click="loadpost(posted.id)">
+		<!-- li class="block" ng-repeat="posted in postList" ng-click="loadpost(posted.id)" -->
+		<li class="block" ng-repeat="posted in postList" >
 			<span class="title">{{posted.title}}</span>
 			<span class="shortpost" ng-bind-html-unsafe="posted.content"></span>
-			<span class="cat"><i class="icon-folder-close "></i>{{posted.category}}</span>
+			<span class="cat mitad izquierda"><i class="icon-folder-close "></i>{{posted.category}}</span>
+			<span class="more mitad derecha txtright"><i class="icon-book"></i><a href="#/post/{{posted.id}}">Read it</a></span>
 			<span class="date"> <i class="icon-calendar "></i> {{posted.dateCreated | date:'dd/MM/yyyy'}}</span>
 		</li>
 	</ul>
@@ -13,7 +15,7 @@
 
 <section class="centrado white block mainpost">
 	<p class="title txtleft">{{post.title}}</p>
-	<article class="postcontent" ng-bind-html-unsafe="post.content">
+	<article id="postid-{{post.id}}" class="postcontent postStyle" ng-bind-html-unsafe="post.css+post.content">
 	</article>
 	<article class="postdata">
 		<ul>
@@ -21,7 +23,7 @@
 			<li class="date mitad derecha txtright"> <i class="icon-calendar "></i>{{post.dateCreated | date:'dd/MM/yyyy'}}</li>
 		</ul>
 	</article>
-	<nav class="centrado">
+	<nav class="">
 		<!--{{lastPostId}} =? {{post.id}} -->
 		<div class="mitad izquierda" >
 			<button class="bt-blue" ng-show="post.id!=lastPostId" ng-click="getNextPost(post.id)"> <i class="icon-arrow-left"></i> Newer</button>
