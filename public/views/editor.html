@@ -91,10 +91,10 @@
 			<p>Social Tools:<b>( {{140-(post.description.length)}} )</b></p>
 			<p ng-init="tweetstatus='Waiting'">Tweet status:{{tweetstatus}}</p>
 			<textarea class="centrado" maxlength="140" ng-model="post.description" ng-change="tweetstatus='writing'">
-				Enter text here...
+				
 			</textarea>
-			<button ng-click="twitterDo()">Get time line</button> 
-			<button ng-click="twitterPOST(post.description)">Tweet as test</button> 
+			<button ng-click="post.description=post.description+' ... http://alextnodeblog.eu01.aws.af.cm/#/post/'+post.id">Add post URL to Tweet</button> 
+			<button ng-click="twitterPOST(post.description)">Tweet it!</button> 
 		</article>
 	<section>
 </section>
