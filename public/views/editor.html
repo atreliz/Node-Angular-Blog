@@ -75,7 +75,26 @@
 			</ul>
 
 			<div class="htmlPreview block grey postStyle" ng-bind-html-unsafe="post.css+post.content"> </div>
+			<p><b>http://alextnodeblog.eu01.aws.af.cm/#/post/{{post.id}}</b></p>
 			<button class="bt-blue"  ng-click="postData(post)"> Save Post </button>
 		</article>
 	</form>
+	<section class="centrado block white">
+		<article class="mitad izquierda block white">
+			<p>Config: <b>Twitter</b> Account</p>
+
+			<button ng-click="twitterAsk()">Join your account</button> 
+			<input id="PINFIELD"></input><button ng-click="twitterJoin()">Insert pin to Join</button> 
+		</article>
+		
+		<article class="mitad derecha block white">
+			<p>Social Tools:<b>( {{140-(post.description.length)}} )</b></p>
+			<p ng-init="tweetstatus='Waiting'">Tweet status:{{tweetstatus}}</p>
+			<textarea class="centrado" maxlength="140" ng-model="post.description" ng-change="tweetstatus='writing'">
+				Enter text here...
+			</textarea>
+			<button ng-click="twitterDo()">Get time line</button> 
+			<button ng-click="twitterPOST(post.description)">Tweet as test</button> 
+		</article>
+	<section>
 </section>

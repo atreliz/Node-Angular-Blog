@@ -1,0 +1,5 @@
+# -- No subir los mock xq empiezan a guardar claves de twitter --
+
+
+filesmock/*
+.DS_Store

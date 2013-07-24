@@ -23,7 +23,8 @@ var lastid=postListJson[totalpost-1].id;
     console.log("Last post.id= "+lastid);
 
   var userList=fs.readFileSync("filesmock/users.json"); //storage as string
-  var userListJson=JSON.parse(userList); //storage as Json    
+  var userListJson=JSON.parse(userList); //storage as Json   
+  var totalusers=userListJson.length; 
   console.log("Available users= "+userList);
 
 
@@ -225,6 +226,57 @@ app.get('/deleteId', function(req, res){
          console.log("Delete: "+postListJson[i] );
       }
   }
+});
+
+
+
+//TWITTER ACCOUNT
+
+//Save TWITTER TOKEN
+app.post('/savetwitterlogin', function(req, res) {
+  //res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Content-Type", "application/json");
+
+  var mail=req.query.email;
+
+    for(var i=0;i<totalusers;i++){ 
+      console.log(userListJson[i]);
+      if(userListJson[i].email===mail){
+        console.log(userListJson[i].email);
+        
+          //userListJson[i].twitter=twitterjson;
+          userListJson[i].twitter={};
+          userListJson[i].twitter.token=req.body.token;
+          userListJson[i].twitter.tokenSecret=req.body.tokenSecret;
+          fs.writeFileSync("filesmock/users.json",JSON.stringify(userListJson));
+
+        console.log("twitter edited");
+      }
+    }
+
+  res.send("Twitter login saved");
+  console.log(userListJson);
+});
+
+//RETURN TWITTER TOKEN
+app.get('/twitterlogin', function(req, res){
+  //res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Content-Type", "application/json");
+
+  var mail=req.query.email;
+
+    for(var i=0;i<totalusers;i++){ 
+      console.log(userListJson[i]);
+      if(userListJson[i].email===mail){
+        console.log(userListJson[i].email);
+        
+          //userListJson[i].twitter=twitterjson;
+          res.send(userListJson[i].twitter);
+        console.log("twitter tokken send");
+      }
+    }
+
+  console.log(userListJson);
 });
 
 

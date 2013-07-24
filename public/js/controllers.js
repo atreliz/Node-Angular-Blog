@@ -113,7 +113,7 @@ function MainCtrl($scope, $http,$location,$rootScope) {
 
 }//closing MainCtrl
 
-function homeCtrl($scope,$rootScope, $http,$routeParams) {
+function homeCtrl($scope,$rootScope, $http,$routeParams,$location) {
 	console.log("EditorCtrl loaded");
 
 	$scope.paginatePost(4,'all','postList');//This will load 4 post
@@ -141,7 +141,8 @@ console.log("ID PEDIDA:"+$routeParams.postid);
 	      success(function(data) {
 	      	console.log( "Loading NEXT POST: "+JSON.stringify(data) );
 	      	console.log( data );
-	      	$scope.post=data;
+	      	//$scope.post=data;
+	      	$location.path("/post/"+data.id);
 	      }).
 	      error(function(data, status) {
 	      	console.log("GET NEXT POST Error: ");
@@ -154,7 +155,8 @@ console.log("ID PEDIDA:"+$routeParams.postid);
 	      success(function(data) {
 	      	console.log( "Loading NEXT POST: "+JSON.stringify(data) );
 	      	console.log( data );
-	      	$scope.post=data;
+	      	//$scope.post=data;
+	      	$location.path("/post/"+data.id);
 	      }).
 	      error(function(data, status) {
 	      	console.log("GET NEXT POST Error: ");
@@ -246,40 +248,109 @@ function EditorCtrl($scope, $http) {
 		  });		
 	};
 
+	//twitter
+   	var cb = new Codebird;
+	cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");//developer APP "YOURKEY" and "YOURSECRET"
+	
+	$scope.twitterAsk=function(){ //not ready
+			
+
+		    
+		    cb.__call(
+			    "oauth_requestToken",
+			    {oauth_callback: "oob"},
+			    function (reply) {
+			        // stores it
+			        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+						console.log("oauth_requestToken"); console.log(reply);
+			        // gets the authorize screen URL
+			        cb.__call(
+			            "oauth_authorize",
+			            {},
+			            function (auth_url) {
+			                window.codebird_auth = window.open(auth_url);
+			            }
+			        );
+			    }
+			);
+	};
+
+	$scope.twitterJoin=function(){ 
+
+			cb.__call(
+		    "oauth_accessToken",
+		    {oauth_verifier: document.getElementById("PINFIELD").value},
+		    function (reply) {
+		        // store the authenticated token, which may be different from the request token (!)
+		        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+		        var data={
+							"token":reply.oauth_token,
+							"tokenSecret":reply.oauth_token_secret
+						};
+
+				//Saving Tokens to server
+				//if(sessionStorage.getItem('logged_as') ){
+				var email=sessionStorage.getItem('logged_as');
+				$http({method: 'POST', 'url': serverUrl+"/savetwitterlogin?email="+email,'data':data, headers: {'Content-Type':'application/json'}}).
+			      success(function(data, status) {
+			      	console.log("TWITTER, Token saved");
+			      }).
+			      error(function(data, status) {
+			      	console.log("TWITTER, Token fail");
+				  });	
+						
+		    }
+		);
+	};
+
+	/*tk1="232702301-hFuatjwaIqVOS5cNkzcHMsC3w58dV75VJZMXG6P2";
+	tk2="03pNxCEe7OUsG9JSs8AdrEh4jd4n1akhhNswPNGDgb4";
+	cb.setToken(tk1, tk2);*/
+	function twtdata(){
+		var cb = new Codebird;
+	 	cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");
+		cb.setToken("232702301-hFuatjwaIqVOS5cNkzcHMsC3w58dV75VJZMXG6P2", "03pNxCEe7OUsG9JSs8AdrEh4jd4n1akhhNswPNGDgb4");
+		
+	 }
 
 
 
+	$scope.twitterPOST=function(value){ 
+		console.log("twitterPOST: "+value);
+		value=value.replace(/(<([^>]+)>)/g, ""); //html to text
 
-//EJEMPLO DE POST Y GET
-/*
-	$scope.postData=function(data){
-		$http({method: 'POST', url: url,'data':data, headers: {'Content-Type':'application/json'}}).
-	      success(function(data, status) {
-	      	sms("POST OK ,Ready to GET");
-	      	$scope.viewpost=false;
-	      }).
-	      error(function(data, status) {
-	      	sms("POST Error: "+status);
-		  });		
-	}
+			//This is not really secure
+			var email=sessionStorage.getItem('logged_as');
+			$http({method: 'GET', 'url': serverUrl+"/twitterlogin?email="+email, headers: {'Content-Type':'application/json'}}).
+		      success(function(data, status) {
+		      	console.log("TWITTER, Token get");
 
-	$scope.getData=function(data){ 
-		var geturl=url+data.type+"/"+data.language;
-		$http({method: 'GET', url: geturl, headers: {'Content-Type':'*'}}).
-	      success(function(data) {
-	      	console.log( "llegado en GET: "+JSON.stringify(data) );
-	      	$scope.codeHtml=decode64(data.bodyTemplate);//
-	      	$scope.codify($scope.codeHtml);
-	      	$scope.viewpost=true;
-	      	$scope.vista="normal"
+			      	var cb = new Codebird;
+				 	cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");
+					cb.setToken(data.token, data.tokenSecret); //this data is storaged on server
+					
+						cb.__call(
+						    "statuses_update",
+						    {"status": value},
+						    function (reply) {
+						    	
+						    	 $scope.$apply(function () {
+							           $scope.tweetstatus="Tweeted!";
+							        });
+						    	console.log("Tweeted");
+						        console.log(reply);
+						    }
+						);
+		      }).
+		      error(function(data, status) {
+		      	console.log("TWITTER, Token get fail");
+			  });
+		
+			
+	};
 
-	      	sms("GET OK , Ready to POST");
-	      }).
-	      error(function(data, status) {
-	      	sms("GET Error: "+status);
-		  });		
-	}
-*/
+
+
 }//closing EditCtrl
 
 
