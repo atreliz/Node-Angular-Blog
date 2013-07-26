@@ -74,18 +74,27 @@
 				<li>dateModified: {{post.dateModified | date:'dd/MM/yyyy'}}</li>
 			</ul>
 
-			<div class="htmlPreview block grey postStyle" ng-bind-html-unsafe="post.css+post.content"> </div>
+			<div id="postid-{{post.id}}" class="htmlPreview block grey postStyle" ng-bind-html-unsafe="post.css+post.content"> </div>
 			<p><b>http://alextnodeblog.eu01.aws.af.cm/#/post/{{post.id}}</b></p>
 			<button class="bt-blue"  ng-click="postData(post)"> Save Post </button>
 		</article>
 	</form>
+
+	<!-- Social area config and buttons-->
 	<section class="centrado block white">
 		<article class="mitad izquierda block white">
 			<p>Config: <b>Twitter</b> Account</p>
 
 			<button ng-click="twitterAsk()">Join your account</button> 
-			<input id="PINFIELD"></input><button ng-click="twitterJoin()">Insert pin to Join</button> 
-		</article>
+			<input id="PINFIELD"></input><button ng-click="twitterJoin()"><i class="icon-twitter"></i>Insert pin to Join</button> 
+			<p>----</p>
+			<p>Config: <b>LinkedIN</b> Account</p>
+			<script type="in/Login">
+				<!-- <img src= <?js=pictureUrl ?> >	Hello, <b><?js= firstName ?></b> <?js= lastName ?>.-->
+				<img src= <?js=pictureUrl ?> >	<b>DONE!!</b>
+			</script>
+			<button ng-click="linkedinLOAD()"><i class="icon-linkedin-sign"></i>Load Linekdin data</button>
+	</article>
 		
 		<article class="mitad derecha block white">
 			<p>Social Tools:<b>( {{140-(post.description.length)}} )</b></p>
@@ -93,8 +102,9 @@
 			<textarea class="centrado" maxlength="140" ng-model="post.description" ng-change="tweetstatus='writing'">
 				
 			</textarea>
-			<button ng-click="post.description=post.description+' ... http://alextnodeblog.eu01.aws.af.cm/#/post/'+post.id">Add post URL to Tweet</button> 
-			<button ng-click="twitterPOST(post.description)">Tweet it!</button> 
+			<button ng-click="post.description=post.description+' ... http://alextnodeblog.eu01.aws.af.cm/#/post/'+post.id">Add post URL to Text</button> 
+			<button ng-click="twitterPOST(post.description)"><i class="icon-twitter"></i>Tweet it!</button> 
+			<button ng-click="linkedinPOST(post.description)"><i class="icon-linkedin-sign "></i> LinkedIn it!</button> 
 		</article>
 	<section>
 </section>

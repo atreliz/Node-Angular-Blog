@@ -1,85 +1,101 @@
 <!doctype html>
 <html lang="en" ng-app="nodeblog" ng-controller="MainCtrl">
-	<head>
-	  <meta charset="utf-8">
-	  <title>Node Blog</title>
-	  <link rel="stylesheet" href="css/reset.css">
-	  <link rel="stylesheet" href="css/font-awesome.min.css">
-	  <link rel="stylesheet" href="css/style.css">
 
- <script src="https://c9.io/isomorphisms/shut_the_front_door/workspace/codebird-js/sha1.js"></script>
-  <script src="https://c9.io/isomorphisms/shut_the_front_door/workspace/codebird-js/codebird.js"></script>
-	  <script src="js/vendor/angular.min.js"></script>
-	  <script src="js/app.js"></script>
-	   <script src="js/controllers.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>Node Blog</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
-
-	</head>
-
-	<body>
-
-		<!--HEADER-->
-		<header class="centrado block grey">
-			<div>
-				<h1 class="txtleft"><a href="#/">{{config.title}}</a></h1>
-				<h2 class="txtcenter">{{config.subtitle}}</h2>
-				<p class="txtcenter">{{config.description}}</p>
-			</div>
-		</header>
-
-		<!--MAIN-->
-		<section  id="maincontainer" class="centrado block grey" ng-view>
-			<h1>Error here will be your page</h1>
-		</section>
-		
-
-		<!--FOOTER-->
-		<footer class="centrado block grey">
-			<div class="mitad izquierda ">
-				<p class="txtcenter">Made by Alex Trebolle </p>
-				<p class="txtcenter">
-					<a target="_blank" href="#"><i class="icon-linkedin-sign "></i></a>
-					<a target="_blank" href="http://newebtaste.com/"><i class="icon-rocket "></i></a>
-					<a target="_blank" href="http://re.vu/Alex-trebolle"><i class=" icon-info-sign "></i></a>
-					<a target="_blank" href="https://github.com/atreliz/Node-Angular-Blog"><i class="icon-github-alt "></i></a>
-					<a target="_blank" href="https://twitter.com/alex_trebolle"><i class="icon-twitter "></i></a>
-					<a target="_blank" href="http://www.linkedin.com/pub/alex-trebolle-liz/1a/989/3b7"><i class="icon-facebook-sign"></i></a>
-				</p>
-			</div>
-			<div class="mitad derecha">
-				<button class="bt-blue"  ng-show="logged" ng-click="popup=true"><i class="icon-user"></i> Login </button>
-				<button class="bt-blue"  ng-show="!logged" ng-click="trylogin('')"><i class="icon-gears"></i> Admin Panel </button>
-				<button class="bt-blue"  ng-show="!logged" ng-click="logout()"><i class="icon-off"></i> Logout </button>
-			</div>
-		</footer>	 
+    <!-- Twitter -->
+    <script src="https://c9.io/isomorphisms/shut_the_front_door/workspace/codebird-js/sha1.js"></script>
+    <script src="https://c9.io/isomorphisms/shut_the_front_door/workspace/codebird-js/codebird.js"></script>
+    <!-- Linkedin -->
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+    api_key: hmllo4dvrra7
+    authorize: true
+    </script>
 
 
-		<!--MODAL WINDOW-->
-		<section ng-show="popup==true" class="modal">
-			<div class="centrado block white">
-				<form name="loginForm" ng-model="login">
-					<h3 class="txtleft mitad izquierda" >Login screen: </h3>
-					<i class="txtright icon-remove mitad derecha" ng-click="popup=false"></i>
-					<fieldset>
-						<label class="mitad izquierda">Email: <span ng-hide="loginForm.email.$valid" class="error">* required</span></label>
-						<input class="mitad derecha" type="email" name="email" ng-model="login.email" required>
-					</fieldset>
-					<fieldset>
-						<label class="mitad izquierda">Password: <span ng-hide="loginForm.pass.$valid" class="error">* required</span></label>
-						<input class="mitad derecha" type="password" name="pass" ng-model="login.pass" required>
-					</fieldset>
-					<p class="centrado txtred">{{error}}</p>
-					<fieldset>
-						<button class="bt-blue"   ng-disabled="!loginForm.$valid" ng-click="trylogin(login)"> 
-							<i ng-show="loginForm.$valid" class="icon-unlock"></i>
-							<i ng-hide="loginForm.$valid" class="icon-lock"></i>
-							Submit</button>
-					</fieldset>
-					
-				</form>
-			</div>
-		</section>
-		
-	 
-	</body>
+    <script src="js/vendor/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+
+
+</head>
+
+<body>
+
+    <!--HEADER-->
+    <header class="centrado block grey">
+        <div>
+            <h1 class="txtleft"><a href="#/">{{config.title}}</a>
+            </h1>
+            <h2 class="txtcenter">{{config.subtitle}}</h2>
+            <p class="txtcenter">{{config.description}}</p>
+        </div>
+    </header>
+
+    <!--MAIN-->
+    <section id="maincontainer" class="centrado block grey" ng-view>
+        <h1>Error here will be your page</h1>
+    </section>
+
+
+    <!--FOOTER-->
+    <footer class="centrado block grey">
+        <div class="mitad izquierda ">
+            <p class="txtcenter">Made by Alex Trebolle</p>
+            <p class="txtcenter">
+                <a target="_blank" href="#"><i class="icon-linkedin-sign "></i></a>
+                <a target="_blank" href="http://newebtaste.com/"><i class="icon-rocket "></i></a>
+                <a target="_blank" href="http://re.vu/Alex-trebolle"><i class=" icon-info-sign "></i></a>
+                <a target="_blank" href="https://github.com/atreliz/Node-Angular-Blog"><i class="icon-github-alt "></i></a>
+                <a target="_blank" href="https://twitter.com/alex_trebolle"><i class="icon-twitter "></i></a>
+                <a target="_blank" href="http://www.linkedin.com/pub/alex-trebolle-liz/1a/989/3b7"><i class="icon-facebook-sign"></i></a>
+            </p>
+        </div>
+        <div class="mitad derecha">
+            <button class="bt-blue" ng-show="logged" ng-click="popup=true"><i class="icon-user"></i> Login</button>
+            <button class="bt-blue" ng-show="!logged" ng-click="trylogin('')"><i class="icon-gears"></i> Admin Panel</button>
+            <button class="bt-blue" ng-show="!logged" ng-click="logout()"><i class="icon-off"></i> Logout</button>
+        </div>
+    </footer>
+
+
+    <!--MODAL WINDOW-->
+    <section ng-show="popup==true" class="modal">
+        <div class="centrado block white">
+            <form name="loginForm" ng-model="login">
+                <h3 class="txtleft mitad izquierda">Login screen:</h3>
+                <i class="txtright icon-remove mitad derecha" ng-click="popup=false"></i>
+                <fieldset>
+                    <label class="mitad izquierda">Email:
+                        <span ng-hide="loginForm.email.$valid" class="error">* required</span>
+                    </label>
+                    <input class="mitad derecha" type="email" name="email" ng-model="login.email" required>
+                </fieldset>
+                <fieldset>
+                    <label class="mitad izquierda">Password:
+                        <span ng-hide="loginForm.pass.$valid" class="error">* required</span>
+                    </label>
+                    <input class="mitad derecha" type="password" name="pass" ng-model="login.pass" required>
+                </fieldset>
+                <p class="centrado txtred">{{error}}</p>
+                <fieldset>
+                    <button class="bt-blue" ng-disabled="!loginForm.$valid" ng-click="trylogin(login)">
+                        <i ng-show="loginForm.$valid" class="icon-unlock"></i>
+                        <i ng-hide="loginForm.$valid" class="icon-lock"></i>
+                        Submit
+                    </button>
+                </fieldset>
+
+            </form>
+        </div>
+    </section>
+
+
+</body>
+
 </html>

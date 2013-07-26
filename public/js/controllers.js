@@ -208,7 +208,7 @@ function EditorCtrl($scope, $http) {
 			"dateCreated":""+now+"",
 			"dateModified":""+now+"",
 			"author":"Alex",
-			"css":"<style type='text/css'> \r\n .postid-"+newid+"{} \r\n </style>",
+			"css":"<style type='text/css'> \r\n #postid-"+newid+"{} \r\n </style>",
 			"content":"<p>Write your html here</p>"
 		}
 
@@ -250,7 +250,9 @@ function EditorCtrl($scope, $http) {
 
 	//twitter
    	var cb = new Codebird;
-	cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");//developer APP "YOURKEY" and "YOURSECRET"
+   	//developer APP "YOURKEY" and "YOURSECRET"
+   	//both should be on sever to be secure
+	cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");
 	
 	$scope.twitterAsk=function(){ //not ready
 			
@@ -303,17 +305,6 @@ function EditorCtrl($scope, $http) {
 		);
 	};
 
-	/*tk1="232702301-hFuatjwaIqVOS5cNkzcHMsC3w58dV75VJZMXG6P2";
-	tk2="03pNxCEe7OUsG9JSs8AdrEh4jd4n1akhhNswPNGDgb4";
-	cb.setToken(tk1, tk2);*/
-	function twtdata(){
-		var cb = new Codebird;
-	 	cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");
-		cb.setToken("232702301-hFuatjwaIqVOS5cNkzcHMsC3w58dV75VJZMXG6P2", "03pNxCEe7OUsG9JSs8AdrEh4jd4n1akhhNswPNGDgb4");
-		
-	 }
-
-
 
 	$scope.twitterPOST=function(value){ 
 		console.log("twitterPOST: "+value);
@@ -348,6 +339,29 @@ function EditorCtrl($scope, $http) {
 		
 			
 	};
+
+
+
+
+
+	//linkedin
+		$scope.linkedinLOAD=function(value){ 
+
+			function displayProfiles(profiles) {
+			     $scope.linkedInData = profiles.values[0];
+			    console.log($scope.linkedInData);
+			}
+
+			IN.API.Profile("me").result(displayProfiles);
+		};//linkedinLOAD
+
+		$scope.linkedinPOST=function(value){ 
+			IN.API.Raw("/people/~/current-status") // Update (PUT) the status
+			  .method("PUT")
+			  .body(JSON.stringify(value))
+			  .result( function(result) { console.log("Status updated"); } )
+			  .error(  function(error)  { console.log("Status ERROR");} );
+		};//linkedinPOST
 
 
 

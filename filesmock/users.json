@@ -1,10 +1,1 @@
-[
-	{
-		"email":"atreliz@gmail.com",
-		"password":"1234"
-	},
-	{
-		"email":"admin@admin.com",
-		"password":"admin"
-	}
-]
+[{"email":"atreliz@gmail.com","password":"1234","twitter":{"token":"232702301-hFuatjwaIqVOS5cNkzcHMsC3w58dV75VJZMXG6P2","tokenSecret":"03pNxCEe7OUsG9JSs8AdrEh4jd4n1akhhNswPNGDgb4"}},{"email":"admin@admin.com","password":"admin"}]
