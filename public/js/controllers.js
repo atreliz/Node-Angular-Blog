@@ -72,7 +72,7 @@ function MainCtrl($scope, $http,$location,$rootScope) {
 				  });		
 		}
 
-//try to login
+	//try to login
 		$scope.trylogin=function(login){ //not ready
 			if(sessionStorage.getItem('logged_as') ){
 				$scope.popup=false;
@@ -106,10 +106,32 @@ function MainCtrl($scope, $http,$location,$rootScope) {
 			$scope.logged=true;
 		};
 
+	//save a comment, must be a put
+	
+	$scope.saveComment=function(data,id){
+		console.log("saving "+data);
+		$http({method: 'PUT', 'url': serverUrl+"/savecomment?id="+id,'data':data, headers: {'Content-Type':'application/json'}}).
+	      success(function(data, status) {
+	      	$scope.loadpost(id);
+	      	console.log("Success on Saving comment");
+	      }).
+	      error(function(data, status) {
+	      	console.log("ERROR on Saving comment");
+		  });	
+		  	
+	};
 
-
-
-
+	$scope.deleteComment=function(postId,commentId){
+		console.log("post: "+postId+", commentId: "+commentId);
+		var geturl=serverUrl+"/deletecomment?postId="+postId+"&commentId="+commentId;
+		$http({method: 'GET', url: geturl, headers: {'Content-Type':'application/json'}}).
+		      success(function(data) {
+		      	console.log( "Comment deleted");
+		      }).
+		      error(function(data, status) {
+		      	console.log("Comment deleted ERROR");
+			  });	
+	};
 
 }//closing MainCtrl
 
@@ -119,7 +141,7 @@ function homeCtrl($scope,$rootScope, $http,$routeParams,$location) {
 	$scope.paginatePost(4,'all','postList');//This will load 4 post
 	//$scope.getLastPost('post');//This will load 1 post
 	$scope.getLastPostId(); //?para qeu lo uso
-console.log("ID PEDIDA:"+$routeParams.postid);
+		console.log("ID PEDIDA:"+$routeParams.postid);
 	if($routeParams.postid){
 		$scope.loadpost($routeParams.postid);
 	}else{
@@ -165,7 +187,7 @@ console.log("ID PEDIDA:"+$routeParams.postid);
 
 	
 	
-}//closing MainCtrl
+}//closing HomeCtrl
 
 
 
@@ -180,7 +202,7 @@ function EditorCtrl($scope, $http) {
 
 	$scope.paginatePost(defaultPagination,'all','postList');//This will load 5 post,default pagination
 	$scope.getLastPostId();
-	$scope.sms="Post Loaded";
+	$scope.sms="Posts List Loaded";
 
 	//Load a single post
 	$scope.loadpost=function(id){ //not ready
@@ -229,8 +251,10 @@ function EditorCtrl($scope, $http) {
 	      error(function(data, status) {
 	      	$scope.sms="Error on saved";
 		  });	
-		  	$scope.sms="Poed";	
+		  	$scope.sms="Posted";	
 	};
+
+
 
 	//Delete a post
 		$scope.deletepost=function(id){ //not ready
@@ -249,7 +273,7 @@ function EditorCtrl($scope, $http) {
 	};
 
 	//twitter
-   	var cb = new Codebird;
+   	var cb = new Codebird; OPEN HERE TO MAKE TWITTER WORKING
    	//developer APP "YOURKEY" and "YOURSECRET"
    	//both should be on sever to be secure
 	cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");
@@ -342,8 +366,6 @@ function EditorCtrl($scope, $http) {
 
 
 
-
-
 	//linkedin
 		$scope.linkedinLOAD=function(value){ 
 
@@ -362,8 +384,6 @@ function EditorCtrl($scope, $http) {
 			  .result( function(result) { console.log("Status updated"); } )
 			  .error(  function(error)  { console.log("Status ERROR");} );
 		};//linkedinPOST
-
-
 
 }//closing EditCtrl
 

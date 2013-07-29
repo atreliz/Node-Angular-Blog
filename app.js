@@ -222,13 +222,69 @@ app.get('/deleteId', function(req, res){
       if(postListJson[i].id==id){
         postListJson.splice(i,1);
         updateserver();
-         res.send("Delete OK ");
-         console.log("Delete: "+postListJson[i] );
+         res.send("Full Post Delete OK ");
+         console.log("Full Post Delete: "+postListJson[i] );
       }
   }
 });
 
 
+//Comments module
+
+//save a Comment
+app.put('/savecomment', function(req, res) {
+  //res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Content-Type", "application/json");
+  var found=false;
+  var newcomment=req.body;
+  var now=new Date().getTime();
+  newcomment.dateCreated=now;// to add the actual time to the comment
+  var id=req.query.id;
+  console.log("post id= "+req.query.id+" to add comment");
+
+  //if the post is new,added to boton
+  //else look for it, and edit it
+
+    for(var i=0;i<totalpost;i++){
+      if(postListJson[i].id==id){
+        if (!postListJson[i].comments){
+          postListJson[i].comments=[];
+          console.log("create a comment array");
+        }
+        
+        postListJson[i].comments.push(newcomment);
+        found=true;
+        console.log("Comment added");
+      }
+    }
+    if(found===false){ //means is a new post
+        postListJson.push(newpost);
+        console.log("Post not found. No abel to add the comment");
+    }
+
+  updateserver();
+  res.send(postListJson[i]);
+  console.log(postListJson);
+});
+
+
+//Delete a Comment 
+app.get('/deletecomment', function(req, res){
+  //res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Content-Type", "application/json");
+
+  var postId=parseInt(req.query.postId);
+  var commentId=parseInt(req.query.commentId);
+  for(var i=0;i<totalpost;i++){
+      if(postListJson[i].id==postId){
+        
+        postListJson[i].comments.splice(commentId,1);
+        updateserver();
+         res.send("Comment Delete OK ");
+         console.log("Comment Delete: "+postListJson[i] );
+      }
+  }
+});
 
 //TWITTER ACCOUNT
 

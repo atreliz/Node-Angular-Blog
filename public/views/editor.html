@@ -4,12 +4,13 @@
 	<div class="centrado">
 		<div class="txtleft mitad izquierda">
 			<h2>Editor panel</h2>
-			<p>Number of posts per page: {{postList.length}} </p>
+			
 		</div>
 
 		<div class="txtright mitad derecha">
 			<button class="bt-blue" ng-click="newpost(lastPostId)"><i class="icon-plus"></i>NEW POST</button> 
-			<p class="mitad derecha"><b>STATUS:</b><span class="txtred"> {{sms}}</span></p>
+			<p>Number of posts per page: {{postList.length}}   <button>+</button> <button>-</button></p>
+			
 		</div>
 
 		<table class="centrado block white">
@@ -65,7 +66,11 @@
 				
 				<!-- POST config-->
 		<article class="previewSide mitad derecha block white">
+			<p class="txtcenter"><a target="blanck" ng-href="http://alextnodeblog.eu01.aws.af.cm/#/post/{{post.id}}">http://alextnodeblog.eu01.aws.af.cm/#/post/{{post.id}}</a></p>
 			<ul class="block">
+				<button ng-init="view='content'" ng-click="view='coments' " ng-show="view=='content' ">Show Comments ({{post.comments.length}})</button>
+				<button ng-click="view='content' " ng-show="view=='coments' ">Show Content</button>
+				
 				<li>id: {{post.id}}</li>
 				<li>category: {{post.category}}</li>
 				<li>title: {{post.title}}</li>
@@ -73,10 +78,24 @@
 				<li>dateCreated: {{post.dateCreated | date:'dd/MM/yyyy'}}</li>
 				<li>dateModified: {{post.dateModified | date:'dd/MM/yyyy'}}</li>
 			</ul>
-
-			<div id="postid-{{post.id}}" class="htmlPreview block grey postStyle" ng-bind-html-unsafe="post.css+post.content"> </div>
-			<p><b>http://alextnodeblog.eu01.aws.af.cm/#/post/{{post.id}}</b></p>
-			<button class="bt-blue"  ng-click="postData(post)"> Save Post </button>
+			<!-- Post preview-->
+			<div ng-show="view=='content' " id="postid-{{post.id}}" class="htmlPreview block grey postStyle" ng-bind-html-unsafe="post.css+post.content"> </div>
+			<!-- Commentes preview-->
+			<div ng-show="view=='coments' " class="block grey centrado">
+				<p ng-show="!post.comments">No comments,sorry </p>
+					<ul>
+						<li ng-repeat="comment in post.comments"> 
+							<!--{{comment}} -->
+							<span class="mitad izquierda">{{$index}}.- <input class="name" ng-model="comment.name"> </span>
+							<span class="mitad derecha txtright">{{comment.dateCreated | date:'dd/MM/yyyy' }}</span>
+							
+							<textarea class="content centrado" ng-model="comment.content"></textarea> 
+							<button ng-click="deleteComment(post.id,$index)"><i class="icon-remove"></i>Delete</button>
+						</li>
+					</ul>
+			</div>
+			<p class="mitad izquierda"><b>STATUS:</b><span class="txtred"> {{sms}}</span></p>
+			<button class="bt-blue"  ng-click="postData(post)"> Save it! </button>
 		</article>
 	</form>
 

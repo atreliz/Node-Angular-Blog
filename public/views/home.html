@@ -23,6 +23,29 @@
 			<li class="date mitad derecha txtright"> <i class="icon-calendar "></i>{{post.dateCreated | date:'dd/MM/yyyy'}}</li>
 		</ul>
 	</article>
+	<article id="coments" class="centrado block grey">
+		<ul>
+			<li class="mitad izquierda" ng-repeat="comment in post.comments"> 
+				<span class="name centrado txtleft"><b>{{comment.name}}</b> on <b>{{comment.dateCreated | date:'dd/MM/yyyy'}}</b></span>
+				<span class="content centrado txtleft">{{comment.content}}</span>
+			</li>
+			<li class="addComment mitad derecha"> 
+				<form name="formComment" ng-model="newComment">
+					
+					<span class="name centrado">
+						<p><b>Leave a comment:</b></p>
+						<label>Name: </label>
+						<input class="centrado" type="text" ng-model="newComment.name" required>
+					</span>
+					<span class="content centrado">
+						<label>Content: </label>
+						<textarea class="centrado" type="text" ng-model="newComment.content" required> Write here</textarea>
+					</span>
+					<button ng-click="saveComment(newComment,post.id)">Send</button>
+				</form>
+			</li>
+		</ul>
+	</article>
 	<nav class="">
 		<!--{{lastPostId}} =? {{post.id}} -->
 		<div class="mitad izquierda" >
