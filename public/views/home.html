@@ -1,6 +1,11 @@
 
 <section class="centrado white block">
-	<h2>Here are some of my lastest post</h2>
+	<h2>Here are some of my lastest post
+		<span>{{actualpage+1}} of {{totalpages}}</span>
+		<button ng-click="getNextPostGroup('4',actualpage,'postList')"><i class="icon-arrow-left"></i></button>
+		<button ng-click="getPrevPostGroup('4',actualpage,'postList')"><i class="icon-arrow-right"></i></button>
+
+	</h2>
 	<ul class="postlist">
 		<!-- li class="block" ng-repeat="posted in postList" ng-click="loadpost(posted.id)" -->
 		<li class="block" ng-repeat="posted in postList" >

@@ -90,6 +90,16 @@ app.get('/allpost', function(req, res){
   console.log("File requested: filesmock/postlist.json");
 });
 
+app.get('/postamount', function(req, res){
+  //res.header("Access-Control-Allow-Origin", "*");
+  //res.header("Content-Type", "application/json");
+
+  console.log("Total number of post: "+totalpost);
+  res.send(JSON.stringify(totalpost) );
+
+  
+});
+
 //last id
 app.get('/lastid', function(req, res){
   //res.header("Access-Control-Allow-Origin", "*");
@@ -105,17 +115,23 @@ app.get('/somepost', function(req, res){
   //res.header("Access-Control-Allow-Origin", "*");
   //res.header("Content-Type", "application/json");
 
-  var cat,until,somePostList, number=parseInt(req.query.number);
+  var cat,until,from,somePostList, number=parseInt(req.query.number), page=parseInt(req.query.page);
+  from=totalpost-(number*page);
+  until=from-number; 
 
-  if(number>=totalpost || number<=0){ until=0;} //this will prevent error from bigger or smaller numbers
-  else{    until=totalpost-number;  }
+  if(  number<0 || page<0 || (until<0 && from<0) ){ somePostList=[];}
+  else if(number>=totalpost ) {somePostList=postListJson;}//this will prevent error from bigger or smaller numbers
+  else if(until<0) {somePostList = postListJson.slice(0,from);}
+  else{ somePostList = postListJson.slice(until,from);}  
+
 
    //cat=parseInt(req.query.cat);//does not matter yet
 
-   somePostList = postListJson.slice(until,totalpost);
+   //somePostList = postListJson.slice(until,totalpost);
+   //somePostList = postListJson.slice(until,from);
    res.send(somePostList);
 
-  console.log(number+"POSTS requested,total="+totalpost+" and until="+until+"result"+somePostList);
+  console.log(number+"POSTS requested,from="+from+" to until="+until+"result"+somePostList);
 });
 
 

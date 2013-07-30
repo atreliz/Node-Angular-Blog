@@ -4,12 +4,20 @@
 	<div class="centrado">
 		<div class="txtleft mitad izquierda">
 			<h2>Editor panel</h2>
+				<span><b>{{postList.length}} posts per page </b></span>
+			
 			
 		</div>
 
 		<div class="txtright mitad derecha">
+			
+			<button ng-click="getPrevPostGroup('4',actualpage,'postList')"><i class="icon-arrow-right"></i></button>
+			<button><b>{{actualpage+1}} of {{totalpages}}</b></button>
+			<button ng-click="getNextPostGroup('4',actualpage,'postList')"><i class="icon-arrow-left"></i></button>
+			
+
 			<button class="bt-blue" ng-click="newpost(lastPostId)"><i class="icon-plus"></i>NEW POST</button> 
-			<p>Number of posts per page: {{postList.length}}   <button>+</button> <button>-</button></p>
+			
 			
 		</div>
 

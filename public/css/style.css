@@ -81,6 +81,7 @@ ul.postlist li{
 	box-shadow: 0px 0px 2px #000;
 	height: 150px;
 }
+
 ul.postlist li span{
 	display:block; 
 	float:left; 
