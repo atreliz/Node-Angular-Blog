@@ -397,7 +397,9 @@ function EditorCtrl($scope, $http) {
     var cb = new Codebird; //OPEN HERE TO MAKE TWITTER WORKING
     //developer APP "YOURKEY" and "YOURSECRET"
     //both should be on sever to be secure
-    cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");
+    var TWkey="";
+    var TWsecret=""
+    cb.setConsumerKey(TWkey, TWsecret;
 
     $scope.twitterAsk = function() { //not ready
 
@@ -477,7 +479,7 @@ function EditorCtrl($scope, $http) {
             console.log("TWITTER, Token get");
 
             var cb = new Codebird;
-            cb.setConsumerKey("QwfQ9D7htpNij26U1pMYJg", "1X0S54AcZFAqhY63e0Vyo4UwvJTy8ythZrH1OnvHI");
+            cb.setConsumerKey(TWkey, TWsecret);
             cb.setToken(data.token, data.tokenSecret); //this data is storaged on server
 
             cb.__call(
